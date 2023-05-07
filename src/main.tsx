@@ -3,6 +3,7 @@ import App from "./App.tsx";
 import "./index.css";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import { BrowserRouter } from "react-router-dom";
+import { RecoilRoot } from "recoil";
 
 const client = new ApolloClient({
   uri: "https://api.ss.dev/resource/api",
@@ -10,8 +11,10 @@ const client = new ApolloClient({
 });
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <BrowserRouter>
-    <ApolloProvider client={client}>
-      <App />
-    </ApolloProvider>
+    <RecoilRoot>
+      <ApolloProvider client={client}>
+        <App />
+      </ApolloProvider>
+    </RecoilRoot>
   </BrowserRouter>
 );
