@@ -21,8 +21,8 @@ const InputField = ({
   return (
     <div
       className={`border ${
-        focused ? "border-white/40" : "border-transparent"
-      } bg-white/20 rounded-md flex stroke-white/40 items-center px-3`}
+        focused ? "border-white/20" : "border-transparent"
+      } bg-white/10 rounded-md flex stroke-white/40 items-center px-3`}
     >
       {leftElement}
       <input
@@ -50,7 +50,7 @@ const InputField = ({
             props.onChange?.(e);
           }
         }}
-        className={`${className} py-1 outline-none w-full bg-transparent px-1 text-sm font-medium `}
+        className={`${className} py-1.5 outline-none w-full bg-transparent placeholder:text-white/40 px-1 text-sm font-medium `}
         {...props}
       />
       {rightElement}

@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { PlaylistType, SongType } from "..";
 import { useLazyQuery } from "@apollo/client";
 import { GET_SONGS_IN_PLAYLIST } from "../utils/queries";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { QueueAtom, SelectedMusicAtom } from "../utils/atom";
 
 type FetchSongsPropsType = {
   currentPlaylist: PlaylistType | null;
@@ -10,6 +12,8 @@ type FetchSongsPropsType = {
 const useFetchSongs = ({ currentPlaylist }: FetchSongsPropsType) => {
   const [songs, setSongs] = useState<SongType[]>([]);
   const [search, setSearch] = useState("");
+  const [selectedMusic, setSelectedMusic] = useRecoilState(SelectedMusicAtom);
+  const setQueue = useSetRecoilState(QueueAtom)
   const [getSongs, { data, loading }] = useLazyQuery(GET_SONGS_IN_PLAYLIST);
 
   const fetchSongs = (playlistId: number, search = "") => {
@@ -31,6 +35,10 @@ const useFetchSongs = ({ currentPlaylist }: FetchSongsPropsType) => {
   useEffect(() => {
     if (data) {
       setSongs(data.getSongs);
+      if (!selectedMusic) {
+        setQueue(data.getSongs)
+        setSelectedMusic(data.getSongs[0]);
+      }
     }
   }, [data]);
 

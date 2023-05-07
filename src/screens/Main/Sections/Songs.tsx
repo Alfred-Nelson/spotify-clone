@@ -4,9 +4,12 @@ import useCurrentPlaylist from "../../../hooks/useCurrentPlaylist";
 import { motion } from "framer-motion";
 import useFetchSongs from "../../../hooks/useFetchSongs";
 import { convertToTime } from "../../../utils/helperFunctions";
-import { Ring } from '@uiball/loaders'
+import { Ring } from "@uiball/loaders";
+import { useRecoilState } from "recoil";
+import { SelectedMusicAtom } from "../../../utils/atom";
 
 const SongsSection = () => {
+  const [selectedMusic, setSelectedMusic] = useRecoilState(SelectedMusicAtom);
   const currentPlaylist = useCurrentPlaylist();
   const { songs, loading, search, setSearch } = useFetchSongs({
     currentPlaylist,
@@ -24,7 +27,7 @@ const SongsSection = () => {
           key={currentPlaylist?.title}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="font-semibold text-3xl mb-4"
+          className="font-semibold text-3xl mb-6"
         >
           {currentPlaylist?.title}
         </motion.h1>
@@ -39,31 +42,40 @@ const SongsSection = () => {
         key={currentPlaylist?.title}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="h-full overflow-y-auto mt-8 pr-2"
+        className="h-full overflow-y-auto mt-6 pr-2"
       >
         {loading ? (
           <div className="w-full flex justify-center">
             <Ring size={30} speed={0.9} color="white" />
           </div>
         ) : (
-          songs.map((each) => (
-            <button className="w-full relative my-2 py-2 hover:bg-white/5 px-2 rounded-md">
+          songs.map((song) => (
+            <button
+              onClick={() => {
+                setSelectedMusic(song);
+              }}
+              className={`w-full relative my-2 py-2 ${
+                selectedMusic?._id === song._id
+                  ? "bg-white/10"
+                  : "hover:bg-white/5"
+              } transition ease-in-out px-2 rounded-md`}
+            >
               <div className="w-full flex justify-between items-center">
                 <div className="flex gap-x-2">
                   <img
-                    src={each.photo}
+                    src={song.photo}
                     alt="song image"
                     className="w-12 h-12 rounded-full"
                   />
                   <div className="flex flex-col justify-between text-left">
                     <p className="text-white max-w-[17vw] truncate">
-                      {each.title}
+                      {song.title}
                     </p>
-                    <p className="text-white/40 text-sm">{each.artist}</p>
+                    <p className="text-white/40 text-sm">{song.artist}</p>
                   </div>
                 </div>
                 <p className="text-white/40 text-sm">
-                  {convertToTime(each.duration)}
+                  {convertToTime(song.duration)}
                 </p>
               </div>
             </button>

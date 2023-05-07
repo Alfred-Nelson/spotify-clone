@@ -15,3 +15,8 @@ export type SongType = {
     title: string;
     url: string;
 }
+
+export type QueueType = {
+    playlistId: number;
+    songs: SongType[];
+}
