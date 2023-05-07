@@ -6,10 +6,11 @@ import useFetchSongs from "../../../hooks/useFetchSongs";
 import { convertToTime } from "../../../utils/helperFunctions";
 import { Ring } from "@uiball/loaders";
 import { useRecoilState } from "recoil";
-import { SelectedMusicAtom } from "../../../utils/atom";
+import { QueueAtom, SelectedMusicAtom } from "../../../utils/atom";
 
 const SongsSection = () => {
   const [selectedMusic, setSelectedMusic] = useRecoilState(SelectedMusicAtom);
+  const [queue, setQueue] = useRecoilState(QueueAtom);
   const currentPlaylist = useCurrentPlaylist();
   const { songs, loading, search, setSearch } = useFetchSongs({
     currentPlaylist,
@@ -53,6 +54,12 @@ const SongsSection = () => {
             <button
               onClick={() => {
                 setSelectedMusic(song);
+                if (
+                  currentPlaylist?.id &&
+                  queue?.playlistId !== currentPlaylist.id
+                ) {
+                  setQueue({ playlistId: currentPlaylist?.id, songs });
+                }
               }}
               className={`w-full relative my-2 py-2 ${
                 selectedMusic?._id === song._id
