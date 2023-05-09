@@ -15,5 +15,5 @@ step3: start the server: `npm run dev`
 6. Initial splash screen for loading
 7. Basic player functionality. ie.. play/pause, next/prev, seeker.
 8. Play music by clicking on song
-9. appolo/client graphql query.
-10. responsiveness and animation added
+9. appolo/client graphql query, typescript and tailwind usage.
+10. responsiveness and animation with framer motion added
