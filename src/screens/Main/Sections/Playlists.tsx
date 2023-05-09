@@ -52,7 +52,7 @@ const PlaylistsSection = ({ scrollToSearch }: PlaylistSectionPropType) => {
         {openModal && (
           <Modal handleCancel={() => setOpenModal(false)}>
             <div className="min-w-[50vw] px-[10vw] pt-[10vh]">
-              <Playlists moreGap />
+              <Playlists onClick={() => setOpenModal(false)} moreGap />
             </div>
           </Modal>
         )}

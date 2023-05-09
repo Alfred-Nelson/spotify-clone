@@ -11,6 +11,8 @@ import {
   SelectedMusicAtom,
 } from "../../../utils/atom";
 import SongItem from "../../../components/SongItem";
+import { useEffect } from "react";
+import { useLocation } from "react-router";
 
 type SongsSectionPropType = {
   songsContainerRef: React.RefObject<HTMLDivElement>;
@@ -25,9 +27,14 @@ const SongsSection = ({
   const [queue, setQueue] = useRecoilState(QueueAtom);
   const setIsPlaying = useSetRecoilState(PlayingStatusAtom);
   const currentPlaylist = useCurrentPlaylist();
+  const location = useLocation()
   const { songs, loading, search, setSearch } = useFetchSongs({
     currentPlaylist,
   });
+
+  useEffect(() => {
+    setSearch("")
+  }, [location])
 
   return (
     <div className="min-h-[100vh] order-3 lg:order-2">
@@ -65,13 +72,14 @@ const SongsSection = ({
             <div className="w-full flex justify-center mt-[4vh]">
               <Ring size={30} speed={0.9} color="white" />
             </div>
-          ) : (
+          ) : songs.length ? (
             songs.map((song) => (
               <SongItem
                 onClick={() => {
                   if (
                     currentPlaylist?.id &&
-                    queue?.playlistId !== currentPlaylist.id
+                    (queue?.playlistId !== currentPlaylist.id ||
+                    queue?.songs.length !== songs.length)
                   ) {
                     setQueue({ playlistId: currentPlaylist?.id, songs });
                   }
@@ -82,6 +90,10 @@ const SongsSection = ({
                 song={song}
               />
             ))
+          ) : (
+            <div className="w-full flex justify-center mt-[12vh] text-white/60">
+                No Songs
+            </div>
           )}
         </motion.div>
       </motion.div>

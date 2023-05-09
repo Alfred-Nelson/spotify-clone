@@ -7,15 +7,17 @@ import { PlaylistsAtom } from "../utils/atom";
 
 type PlaylistsPropType = {
   moreGap?: boolean;
+  onClick?: () => void
 };
 
-const Playlists = ({ moreGap = false }: PlaylistsPropType) => {
+const Playlists = ({ moreGap = false, onClick = () => {} }: PlaylistsPropType) => {
   const playlists = useRecoilValue(PlaylistsAtom);
 
   return (
     <>
       {playlists.map((playlist: PlaylistType) => (
         <NavLink
+          onClick={onClick}
           to={`${toSlug(playlist.title)}`}
           className={({ isActive }) =>
             `${isActive ? "text-white" : "text-white/40"} w-fit`
