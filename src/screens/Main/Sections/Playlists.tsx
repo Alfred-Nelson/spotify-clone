@@ -1,14 +1,10 @@
 import { AnimatePresence, motion } from "framer-motion";
 import SpotifyLogo from "../../../assets/SpotifyLogo";
-import { PlaylistType } from "../../..";
-import { NavLink } from "react-router-dom";
-import { toSlug } from "../../../utils/helperFunctions";
-import { useRecoilValue } from "recoil";
-import { PlaylistsAtom } from "../../../utils/atom";
 import HamburgerIcon from "../../../assets/HamburgerIcon";
 import { useState } from "react";
 import Modal from "../../../components/Modal";
 import SearchIcon from "../../../assets/SearchIcon";
+import Playlists from "../../../components/Playlists";
 
 type PlaylistSectionPropType = {
   scrollToSearch: () => void;
@@ -16,7 +12,6 @@ type PlaylistSectionPropType = {
 
 const PlaylistsSection = ({ scrollToSearch }: PlaylistSectionPropType) => {
   const [openModal, setOpenModal] = useState(false);
-  const playlists = useRecoilValue(PlaylistsAtom);
 
   return (
     <>
@@ -50,44 +45,14 @@ const PlaylistsSection = ({ scrollToSearch }: PlaylistSectionPropType) => {
           transition={{ delay: 1 }}
           className="hidden md:flex flex-col justify-center mt-12 ml-12 gap-y-4"
         >
-          {playlists.map((playlist: PlaylistType) => (
-            <NavLink
-              to={`${toSlug(playlist.title)}`}
-              className={({ isActive }) =>
-                `${isActive ? "text-white" : "text-white/40"} w-fit`
-              }
-            >
-              {({ isActive }) => (
-                <motion.p whileHover={{ scale: isActive ? 1 : 0.98 }}>
-                  {playlist.title}
-                </motion.p>
-              )}
-            </NavLink>
-          ))}
+          <Playlists />
         </motion.div>
       </div>
       <AnimatePresence>
         {openModal && (
           <Modal handleCancel={() => setOpenModal(false)}>
             <div className="min-w-[50vw] px-[10vw] pt-[10vh]">
-              {playlists.map((playlist: PlaylistType) => (
-                <NavLink
-                  onClick={() => setOpenModal(false)}
-                  to={`${toSlug(playlist.title)}`}
-                  className={({ isActive }) =>
-                    `${isActive ? "text-white" : "text-white/40"}`
-                  }
-                >
-                  {({ isActive }) => (
-                    <motion.p
-                      whileHover={{ scale: isActive ? 1 : 0.98 }}
-                      className="py-[3vh]"
-                    >
-                      {playlist.title}
-                    </motion.p>
-                  )}
-                </NavLink>
-              ))}
+              <Playlists moreGap />
             </div>
           </Modal>
         )}

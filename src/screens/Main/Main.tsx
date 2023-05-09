@@ -17,7 +17,7 @@ const Main = () => {
       behavior: "smooth",
       block: "start",
     });
-    setTimeout(() => searchRef.current?.focus(), 12.0);
+    setTimeout(() => searchRef.current?.focus(), 1000);
   };
 
   return (

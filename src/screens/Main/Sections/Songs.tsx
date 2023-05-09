@@ -3,7 +3,6 @@ import InputField from "../../../components/InputField";
 import useCurrentPlaylist from "../../../hooks/useCurrentPlaylist";
 import { motion } from "framer-motion";
 import useFetchSongs from "../../../hooks/useFetchSongs";
-import { convertToTime } from "../../../utils/helperFunctions";
 import { Ring } from "@uiball/loaders";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import {
@@ -11,6 +10,7 @@ import {
   QueueAtom,
   SelectedMusicAtom,
 } from "../../../utils/atom";
+import SongItem from "../../../components/SongItem";
 
 type SongsSectionPropType = {
   songsContainerRef: React.RefObject<HTMLDivElement>;
@@ -67,7 +67,7 @@ const SongsSection = ({
             </div>
           ) : (
             songs.map((song) => (
-              <button
+              <SongItem
                 onClick={() => {
                   if (
                     currentPlaylist?.id &&
@@ -78,31 +78,9 @@ const SongsSection = ({
                   setSelectedMusic(song);
                   setIsPlaying(true);
                 }}
-                className={`w-full relative my-2 py-2 ${
-                  selectedMusic?._id === song._id
-                    ? "bg-white/10"
-                    : "hover:bg-white/5"
-                } transition ease-in-out px-2 rounded-md`}
-              >
-                <div className="w-full flex justify-between items-center">
-                  <div className="flex gap-x-2">
-                    <img
-                      src={song.photo}
-                      alt="song image"
-                      className="w-12 h-12 rounded-full"
-                    />
-                    <div className="flex flex-col justify-between text-left">
-                      <p className="text-white max-w-[34vw] md:max-w-[30vw] lg:max-w-[17vw] truncate">
-                        {song.title}
-                      </p>
-                      <p className="text-white/40 text-sm">{song.artist}</p>
-                    </div>
-                  </div>
-                  <p className="text-white/40 text-sm">
-                    {convertToTime(song.duration)}
-                  </p>
-                </div>
-              </button>
+                selected={selectedMusic?._id === song._id}
+                song={song}
+              />
             ))
           )}
         </motion.div>
