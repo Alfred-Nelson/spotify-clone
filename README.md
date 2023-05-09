@@ -2,8 +2,8 @@
 A simple spotify clone to play songs from given playlist
 
 ## Initialize project
-step1: clone the project and move to the project directory
-step2: install all dependency: `npm i`
+step1: clone the project and move to the project directory <br />
+step2: install all dependency: `npm i` <br />
 step3: start the server: `npm run dev`
 
 ## About the project
