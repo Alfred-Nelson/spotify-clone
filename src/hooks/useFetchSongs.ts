@@ -13,7 +13,7 @@ const useFetchSongs = ({ currentPlaylist }: FetchSongsPropsType) => {
   const [songs, setSongs] = useState<SongType[]>([]);
   const [search, setSearch] = useState("");
   const [selectedMusic, setSelectedMusic] = useRecoilState(SelectedMusicAtom);
-  const setQueue = useSetRecoilState(QueueAtom)
+  const setQueue = useSetRecoilState(QueueAtom);
   const [getSongs, { data, loading }] = useLazyQuery(GET_SONGS_IN_PLAYLIST);
 
   const fetchSongs = (playlistId: number, search = "") => {
@@ -36,7 +36,9 @@ const useFetchSongs = ({ currentPlaylist }: FetchSongsPropsType) => {
     if (data) {
       setSongs(data.getSongs);
       if (!selectedMusic) {
-        setQueue(data.getSongs)
+        if (currentPlaylist) {
+          setQueue({ playlistId: currentPlaylist.id, songs: data.getSongs });
+        }
         setSelectedMusic(data.getSongs[0]);
       }
     }

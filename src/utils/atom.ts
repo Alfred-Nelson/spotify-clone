@@ -8,10 +8,15 @@ export const PlaylistsAtom = atom({
 
 export const SelectedMusicAtom = atom({
   key: "selectedMusic",
-  default: null as SongType | null
-})
+  default: null as SongType | null,
+});
 
 export const QueueAtom = atom({
   key: "Queue",
-  default: null as QueueType | null
-})
+  default: null as QueueType | null,
+});
+
+export const PlayingStatusAtom = atom({
+  key: "isPlaying",
+  default: false,
+});

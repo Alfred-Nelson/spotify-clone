@@ -4,13 +4,24 @@ import PlaylistsSection from "./Sections/Playlists";
 import SongsSection from "./Sections/Songs";
 import { motion } from "framer-motion";
 import { SelectedMusicAtom } from "../../utils/atom";
-import "../../styles/background.css"
+import "../../styles/background.css";
+import { useRef } from "react";
 
 const Main = () => {
-  const selectedMusic = useRecoilValue(SelectedMusicAtom)
+  const songsContainerRef = useRef<HTMLDivElement>(null);
+  const searchRef = useRef<HTMLInputElement>(null);
+  const selectedMusic = useRecoilValue(SelectedMusicAtom);
+
+  const scrollToSearch = () => {
+    songsContainerRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+    setTimeout(() => searchRef.current?.focus(), 12.0);
+  };
 
   return (
-    <div className="h-screen relative">
+    <div className="h-screen">
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -18,22 +29,28 @@ const Main = () => {
         key={selectedMusic?.photo}
         className="z-10 absolute w-screen h-screen top-0 left-0"
       >
-          <div className="image-container">
-            <div 
-             style={{ backgroundImage: `url(${selectedMusic?.photo})`}} 
-             className="image"></div>  
-          </div>
+        <div className="blur-[100px] w-full h-full opacity-60">
+          <div
+            style={{ backgroundImage: `url(${selectedMusic?.photo})` }}
+            className="w-full h-full"
+          ></div>
+        </div>
       </motion.div>
       <div
         style={{
           background:
-            "linear-gradient(to bottom right, transparent, #000000 80%)",
+            "linear-gradient(to bottom right, transparent, #000000 70%)",
         }}
-        className="relative z-20 flex h-screen"
+        className="w-full relative top-0 z-20 flex flex-col justify-center items-center md:items-start md:flex-row h-screen"
       >
-        <PlaylistsSection />
-        <SongsSection />
-        <MusicPlayerSection />
+        <PlaylistsSection scrollToSearch={scrollToSearch} />
+        <div className="w-full flex items-center md:items-start flex-col lg:flex-row h-[100vh] overflow-y-auto">
+          <SongsSection
+            songsContainerRef={songsContainerRef}
+            searchRef={searchRef}
+          />
+          <MusicPlayerSection />
+        </div>
       </div>
     </div>
   );

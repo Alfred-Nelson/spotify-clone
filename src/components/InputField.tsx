@@ -1,6 +1,7 @@
-import React, { InputHTMLAttributes, useRef, useState } from "react";
+import React, { InputHTMLAttributes, useState } from "react";
 
 type InputFieldPropType = {
+  inputRef?: React.RefObject<HTMLInputElement> | null;
   leftElement?: React.ReactNode;
   rightElement?: React.ReactNode;
   validation?: (value: string) => string;
@@ -8,6 +9,7 @@ type InputFieldPropType = {
 };
 
 const InputField = ({
+  inputRef = null,
   leftElement = null,
   rightElement = null,
   validation = (value) => value,
@@ -16,7 +18,6 @@ const InputField = ({
   ...props
 }: InputFieldPropType & InputHTMLAttributes<HTMLInputElement>) => {
   const [focused, setFocused] = useState(false);
-  const inputRef = useRef(null);
 
   return (
     <div
