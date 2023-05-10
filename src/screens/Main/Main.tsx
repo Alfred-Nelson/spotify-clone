@@ -44,7 +44,7 @@ const Main = () => {
         className="w-full relative top-0 z-20 flex flex-col justify-center items-center md:items-start md:flex-row h-screen"
       >
         <PlaylistsSection scrollToSearch={scrollToSearch} />
-        <div className="w-full flex items-center md:items-start flex-col lg:flex-row h-[100vh] overflow-y-auto">
+        <div className="w-full flex items-center md:items-start flex-col lg:flex-row h-[100vh] overflow-y-auto scrollbar">
           <SongsSection
             songsContainerRef={songsContainerRef}
             searchRef={searchRef}

@@ -66,7 +66,7 @@ const SongsSection = ({
           key={currentPlaylist?.title}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="h-full overflow-y-auto mt-6 pr-2"
+          className={`h-full overflow-y-auto ${!loading && "scrollbar"} mt-6 pr-2`}
         >
           {loading ? (
             <div className="w-full flex justify-center mt-[4vh]">

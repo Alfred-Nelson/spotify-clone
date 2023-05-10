@@ -36,12 +36,12 @@ const Modal = ({ handleCancel = () => {}, children }: ModalPropType) => {
           animate={{
             x: 0,
             opacity: 1,
-            transition: { duration: 0.8, ease: "easeInOut" },
+            transition: { duration: 0.5, ease: "easeInOut" },
           }}
           exit={{
             x: "-100%",
             opacity: 0.8,
-            transition: { duration: 0.8, ease: "easeInOut" },
+            transition: { duration: 0.5, ease: "easeInOut" },
           }}
           className={`w-fit select-none z-50 pointer-events-auto  h-[100dvh] flex flex-col p-3 bg-[#0B1017] shadow-lg`}
         >

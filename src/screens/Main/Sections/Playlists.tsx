@@ -5,6 +5,7 @@ import { useState } from "react";
 import Modal from "../../../components/Modal";
 import SearchIcon from "../../../assets/SearchIcon";
 import Playlists from "../../../components/Playlists";
+import profile_pic from "../../../assets/images/alfred-nelson.jpeg"
 
 type PlaylistSectionPropType = {
   scrollToSearch: () => void;
@@ -15,7 +16,7 @@ const PlaylistsSection = ({ scrollToSearch }: PlaylistSectionPropType) => {
 
   return (
     <>
-      <div className="w-full md:w-[40vw] lg:w-[25vw]">
+      <div className="w-full md:w-[40vw] lg:w-[25vw] relative md:min-h-[100dvh]">
         <div className="w-full flex items-center justify-between px-4 md:px-0">
           <button onClick={() => setOpenModal(true)} className="md:hidden">
             <HamburgerIcon />
@@ -47,12 +48,16 @@ const PlaylistsSection = ({ scrollToSearch }: PlaylistSectionPropType) => {
         >
           <Playlists />
         </motion.div>
+        <img src={profile_pic} alt="profile picture" className="w-10 h-10 rounded-full absolute bottom-8 left-10 hidden md:block" />
       </div>
       <AnimatePresence>
         {openModal && (
           <Modal handleCancel={() => setOpenModal(false)}>
-            <div className="min-w-[50vw] px-[10vw] pt-[10vh]">
+            <div className="h-full flex flex-col justify-between pb-8 px-[5vw]">
+            <div className="min-w-[40vw] pt-[10vh]">
               <Playlists onClick={() => setOpenModal(false)} moreGap />
+            </div>
+            <img src={profile_pic} alt="profile picture" className="w-10 h-10 rounded-full" />
             </div>
           </Modal>
         )}
