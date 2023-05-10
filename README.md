@@ -17,4 +17,3 @@ step3: start the server: `npm run dev`
 8. Play music by clicking on song
 9. appolo/client graphql query, typescript and tailwind usage.
 10. responsiveness and animation with framer motion added
-11. search clearing while playlist change
